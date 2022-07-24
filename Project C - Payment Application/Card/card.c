@@ -31,6 +31,15 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData)
 
 EN_cardError_t getCardPAN(ST_cardData_t *cardData)
 {
+    printf("Enter Card PAN:");
+    gets(cardData->primaryAccountNumber);
+    int strln = strlen(cardData->primaryAccountNumber);
+    if (strln > 16 || strln <19 || cardData->cardExpirationDate  == "\0")
+    {
+        return WRONG_PAN;
+    }
+    else return OK;
+
 
 
 }
