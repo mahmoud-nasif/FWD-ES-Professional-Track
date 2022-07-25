@@ -19,22 +19,16 @@ ST_transaction_t transactions[255]={0};
 
 EN_transState_t recieveTransactionData(ST_transaction_t *transData)
 {
-   uint8_t acc_flag=0;
+  
    uint32_t i;
    for (i = 0; i < account_num; i++)
    {
     if (accountsdata[i].primaryAccountNumber== transData->cardHolderData.primaryAccountNumber)
     {
-        acc_flag=1;
+        break;
     }
    }
-   if(acc_flag==0) return DECLINED_STOLEN_CARD;
-
-    if(transData->terminalData.transAmount>accountsdata[i].balance)
-    return DECLINED_INSUFFECIENT_FUND;
-
-    if(transData->transactionSequenceNumber<= 0) return INTERNAL_SERVER_ERROR;
-
+   
     accountsdata[i].balance -= transData->terminalData.transAmount;
     return APPROVED;
     
@@ -74,7 +68,8 @@ EN_serverError_t saveTransaction(ST_transaction_t *transData)
 {
     transactions[transnum].cardHolderData=transData->cardHolderData;
     transactions[transnum].terminalData=transData->terminalData;
-    transactions[transnum].transactionSequenceNumber=transData->transactionSequenceNumber;
+    transactions[transnum].transactionSequenceNumber=transnum;
+    transData->transactionSequenceNumber=transnum;
     transactions[transnum].transState=transData->transState;
 
     
