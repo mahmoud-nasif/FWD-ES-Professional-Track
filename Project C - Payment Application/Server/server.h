@@ -21,7 +21,7 @@ uint32_t transactionSequenceNumber;
 
 typedef enum EN_serverError_t
 {
-OK, SAVING_FAILED, TRANSACTION_NOT_FOUND, ACCOUNT_NOT_FOUND, LOW_BALANCE
+OKO, SAVING_FAILED, TRANSACTION_NOT_FOUND, ACCOUNT_NOT_FOUND, LOW_BALANCE
 }EN_serverError_t ;
 
 typedef struct ST_accountsDB_t

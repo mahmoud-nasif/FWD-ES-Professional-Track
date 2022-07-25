@@ -1,5 +1,10 @@
 
 #include"app.h"
+#include"stdio.h"
+#include "../StdTypes.h"
+#include "../Card/card.h"
+#include "../Terminal/terminal.h"
+#include"../Server/server.h"
 
 
 
@@ -95,7 +100,7 @@ if(server = LOW_BALANCE)
     goto start;
 }
 
-server = recieveTransactionData(&terminal);
+server = recieveTransactionData(&transaction);
 if(server = APPROVED)
 {
     printf("APPROVED Transaction!");
@@ -111,4 +116,11 @@ if(server = APPROVED)
 
 
 
+}
+
+
+void main(void)
+{
+
+    appStart();
 }
