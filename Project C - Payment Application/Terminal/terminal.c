@@ -1,8 +1,9 @@
 #include"terminal.h"
+#include"stdio.h"
 #include"time.h"
 
 
-EN_terminalError_t getTransactionDate(ST_terminalData_t *termData)
+/*EN_terminalError_t getTransactionDate(ST_terminalData_t* termData)
 {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
@@ -23,34 +24,38 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData)
     termData->transactionDate[8] = (tm.tm_year&100)/10;
     termData->transactionDate[9] = (tm.tm_year%10);
     return OK;
-}
-/*EN_terminalError_t getTransactionDate(ST_terminalData_t *termData)
+}*/
+EN_terminalError_t getTransactionDate(ST_terminalData_t *termData)
 {
  printf("Enter Card Transaction Date on the format DD/MM/YYYY:");
-    gets(termData->transactionDate);
+    fgets(termData->transactionDate,sizeof(termData->transactionDate),stdin);
     int strln = strlen(termData->transactionDate);
-    if (strln > 10 || strln <10 || termData->transactionDate  == "\0" )
+    if (strln > 10 || strln <10 || termData->transactionDate  == '\0' )
     {
         return WRONG_DATE;
     }
-    else return OK;
+    else return K;
 }
 
 
 
-*/
-
-
 EN_terminalError_t isCardExpired(ST_cardData_t cardData, ST_terminalData_t termData){
-if (cardData.cardExpirationDate[3]>= termData.transactionDate[8])
+    if (cardData.cardExpirationDate[3] >= termData.transactionDate[8])
+    {
+        if (cardData.cardExpirationDate[4] > termData.transactionDate[9])
+        {
+          return K; 
+        }
+    }
+else if (cardData.cardExpirationDate[3] >= termData.transactionDate[8])
 {
-    if (cardData.cardExpirationDate[4]>= termData.transactionDate[9])
+    if (cardData.cardExpirationDate[4]== termData.transactionDate[9])
     {
         if (cardData.cardExpirationDate[0]>= termData.transactionDate[3])
         {
             if (cardData.cardExpirationDate[1]>= termData.transactionDate[4])
             {
-                return OK;
+                return K;
             }
         }
     }
@@ -61,13 +66,13 @@ else return EXPIRED_CARD;
 
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){
     printf("Enter Transaction Amount:");
-    gets(termData->transAmount);
+    scanf_s("%f",&termData->transAmount);
     
     if (termData->transAmount<= 0)
     {
         return INVALID_AMOUNT;
     }
-    else return OK;
+    else return K;
 
 
 }
@@ -77,18 +82,18 @@ EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData){
     {
         return EXCEED_MAX_AMOUNT;
     }
-    else return OK;
+    else return K;
 }
 EN_terminalError_t setMaxAmount(ST_terminalData_t *termData){
     printf("Set Max Transaction Amount:");
-    float a ;
-    scanf("%f",&a);
+    uint32_t a ;
+    scanf_s("%d",&a);
     termData->maxTransAmount=a;
 
 if (termData->maxTransAmount<= 0)
     {
         return INVALID_MAX_AMOUNT;
     }
-    else return OK;
+    else return K;
 
 }
