@@ -53,8 +53,13 @@ if(card_error == WRONG_PAN)
 
 
 terminal.maxTransAmount = 5000.00;
+wrongteandate:
 terminal_error = getTransactionDate(&terminal);
-
+if (terminal_error == WRONG_DATE)
+{
+    printf("Wrong Date, Try Again!\n");
+    goto wrongteandate;
+}
 terminal_error = isCardExpired(card,terminal);
 if(terminal_error == EXPIRED_CARD)
 {
